@@ -1,0 +1,76 @@
+﻿
+@model CategoryVM
+
+@{
+    ViewData["Title"] = "Liste";
+}
+
+<h2 class="text-center text-danger">Kategori Listesi</h2>
+<form asp-action="Liste" asp-controller="Categories"  class="d-inline-flex">
+    <input type="search" class="form-control" placeholder="Arama" name="name" />
+    <button type="submit" class="btn btn-success">Ara</button>
+
+</form>
+<hr />
+
+@if(TempData["result"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["result"]
+    </div>
+}
+<p>
+    <a class="btn btn-info float-end mb-2" asp-action="Create">Yeni Kayıt</a>
+</p>
+
+<table class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Description)
+            </th>
+
+            <th>Detay</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.clist)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+              
+                <td class="text-center">
+                    <a asp-action="Detay" asp-controller="Categories" asp-route-id="@item.CategoryId">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="Guncelle" asp-controller="Categories" asp-route-id="@item.CategoryId">
+                        <i class="fas fa-pen-alt text-success"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="Sil" asp-controller="Categories" asp-route-id="@item.CategoryId">
+                        <i class="fas fa-trash-alt text-danger"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
